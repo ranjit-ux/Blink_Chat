@@ -12,6 +12,10 @@ const app = express();
 app.use(express.json());
 
 
+app.get("/",(req,res)=>{
+  res.send("Blink Backend API is running Successfully!")
+})
+
 app.use("/auth", authRoutes);
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
