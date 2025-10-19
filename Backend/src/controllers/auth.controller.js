@@ -70,7 +70,7 @@ export const login = async (req,res)=>{
 
         res.status(200).json({
             _id:existingUser._id,
-            fullname:existingUser.fullName,
+            fullName:existingUser.fullName,
             email:existingUser.email,
             profilePic:existingUser.profilePic,
             message:"Login Successful",
