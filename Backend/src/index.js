@@ -11,7 +11,7 @@ dotenv.config({ path: path.resolve(process.cwd(), "../.env") });
 import express from "express";
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
-
+import usersRoues from "./routes/users.routes.js"
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -27,6 +27,7 @@ app.get("/",(req,res)=>{
 
 app.use("/api/auth", authRoutes);
 app.use("/api/message", messageRoutes);
+app.use("/users",usersRoues);
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);
