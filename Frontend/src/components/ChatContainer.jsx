@@ -7,20 +7,36 @@ import { useAuthStore } from "../store/useAuthStore";
 import { formatMessageTime } from "../lib/utils";
 const ChatContainer = () => {
 
-  const {messages, getMessages, isMessegesLoading, selectedUsers} = useChatStore();
-  const {authUser} = useAuthStore
+  const {messages, getMessages, isMessagesLoading, selectedUser} = useChatStore();
+  const {authUser} = useAuthStore();
 
-  if(isMessegesLoading) return(
-    <div className="flex-1 flex flex-col overflow-auto">
-      <ChatHeader />
-      <MessageSkeleton />
-      <MessageInput/>
-    </div>
-  )
+  // if(isMessagesLoading) return(
+  //   <div className="flex-1 flex flex-col overflow-auto">
+  //     <ChatHeader />
+  //     <MessageSkeleton />
+  //     <MessageInput/>
+  //   </div>
+  // )
 
   useEffect(() => {
-    getMessages(selectedUsers._id)
-  }, [selectedUsers._id,getMessages]);
+    if(!selectedUser?._id) return;
+    getMessages(selectedUser._id)
+  }, [selectedUser._id,getMessages]);
+
+  // useEffect(() => {
+  // if (!selectedUser?._id) return;
+
+  // const fetchMessages = async () => {
+  //   try {
+  //     await getMessages(selectedUser._id); // sends GET /api/messages/:id
+  //   } catch (err) {
+  //     console.error("Failed to fetch messages:", err);
+  //   }
+  // }
+
+//   fetchMessages();
+// }, [selectedUser?._id, getMessages]);
+
 
   return(
     <div className="flex-1 flex flex-col overflow-auto">
@@ -31,7 +47,7 @@ const ChatContainer = () => {
           <div key={message._id} className={`chat ${message.senderId === authUser._id ? "chat-end" : "chat-start"}`} >
             <div className="chat-image avatar">
               <div className="size-10 rounded-full border">
-                <img src={message.senderId == authUser._id ? authUser.profilePic || "/defaultProfilePic.png" : selectedUsers.profilePic || "/defaultProfilePic.png"} alt="Profile Pic" />
+                <img src={message.senderId == authUser._id ? authUser.profilePic || "/defaultProfilePic.png" : selectedUser.profilePic || "/defaultProfilePic.png"} alt="Profile Pic" />
               </div>
             </div>
             <div className="chat-header mb-1">  
